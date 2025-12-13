@@ -1,0 +1,6 @@
+const PROJECT_ID = String(import.meta.env.VITE_APPWRITE_PROJECT_ID)
+const DATABASE_ID = String(import.meta.env.VITE_APPWRITE_DATABASE)
+const COLLECTION_ID = String(import.meta.env.VITE_APPWRITE_COLLECTION)
+const PROJECT_ENDPOINT = String(import.meta.env.VITE_APPWRITE_ENDPOINT)
+
+export {PROJECT_ID, DATABASE_ID, COLLECTION_ID, PROJECT_ENDPOINT}
