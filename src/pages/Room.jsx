@@ -3,6 +3,7 @@ import { databases, client } from '../lib/appwrite'
 import { DATABASE_ID, COLLECTION_ID } from "../appwrite/conf"
 import { ID, Query } from "appwrite"
 import { Trash2 } from "react-feather"
+import Header from "../components/Header"
 
 export default function Room() {
     const [messages, setMessages] = useState([])
@@ -74,6 +75,7 @@ export default function Room() {
 
     return (
         <main className="container">
+            <Header/>
             <div className="room--container">
                 <form
                     onSubmit={handleSubmit}
