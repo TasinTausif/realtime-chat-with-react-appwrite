@@ -3,6 +3,7 @@ import Room from "./pages/Room";
 import LoginPage from "./pages/LoginPage"
 import PrivateRoutes from "./components/PrivateRoutes";
 import { AuthProvider } from "./utils/AuthContext";
+import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
     return (
@@ -10,6 +11,7 @@ export default function App() {
             <AuthProvider>
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage/>} />
                     <Route element={<PrivateRoutes />}>
                         <Route path="/" element={<Room />} />
                     </Route>

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { databases, client } from '../lib/appwrite'
 import { DATABASE_ID, COLLECTION_ID } from "../appwrite/conf"
-import { ID, Query } from "appwrite"
+import { ID, Query, Role, Permission } from "appwrite"
 import { Trash2 } from "react-feather"
 import Header from "../components/Header"
+import { useAuth } from "../utils/AuthContext"
 
 export default function Room() {
+    const { user } = useAuth()
     const [messages, setMessages] = useState([])
     const [messageBody, setMessageBody] = useState('')
 
@@ -13,11 +15,11 @@ export default function Room() {
         getMessage()
 
         const unsubscribe = client.subscribe(`databases.${DATABASE_ID}.tables.${COLLECTION_ID}.rows`, response => {
-            if(response.events.includes("databases.*.tables.*.rows.*.create")){
+            if (response.events.includes("databases.*.tables.*.rows.*.create")) {
                 setMessages(prev => [response.payload, ...prev])
             }
 
-            if(response.events.includes("databases.*.tables.*.rows.*.delete")){
+            if (response.events.includes("databases.*.tables.*.rows.*.delete")) {
                 setMessages(prev => prev.filter(message => message.$id !== response.payload.$id))
             }
         });
@@ -31,14 +33,21 @@ export default function Room() {
         e.preventDefault()
 
         let payload = {
-            body: messageBody
+            body: messageBody,
+            user_id: user.$id,
+            username: user.name,
         }
+
+        let permissions = [
+            Permission.write(Role.user(user.$id)),//Write permission allows to update or delete
+        ]
 
         await databases.createDocument(
             DATABASE_ID,
             COLLECTION_ID,
             ID.unique(),
-            payload
+            payload,
+            permissions
         )
 
         setMessageBody('')
@@ -61,11 +70,19 @@ export default function Room() {
     const allMessages = messages.map(message => (
         <div key={message.$id} className="message--wrapper">
             <div className="message--header">
-                <small className="message-timestamp">{new Date(message.$createdAt).toLocaleString()}</small>
-                <Trash2
-                    onClick={() => deleteMessage(message.$id)}
-                    className="delete--btn"
-                />
+                <p>
+                    {message?.username ? (
+                        <span> {message?.username}</span>
+                    ) : (
+                        'Anonymous user'
+                    )}
+
+                    <small className="message-timestamp"> {new Date(message.$createdAt).toLocaleString()}</small>
+                </p>
+                {/* It defines if a message contains permissions of deleting by who has created the message */}
+                {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
+                    <Trash2 className="delete--btn" onClick={() => { deleteMessage(message.$id) }} />
+                )}
             </div>
             <div className="message--body">
                 <span>{message.body}</span>
@@ -75,7 +92,7 @@ export default function Room() {
 
     return (
         <main className="container">
-            <Header/>
+            <Header />
             <div className="room--container">
                 <form
                     onSubmit={handleSubmit}

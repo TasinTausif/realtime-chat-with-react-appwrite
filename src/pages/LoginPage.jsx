@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { useAuth } from "../utils/AuthContext"
 
 export default function LoginPage() {
-	const {user, handleUserLogin} = useAuth()
+	const { user, handleUserLogin } = useAuth()
 	const navigate = useNavigate()
 
 	const [credentials, setCredentials] = useState({
@@ -60,6 +60,7 @@ export default function LoginPage() {
 						/>
 					</div>
 				</form>
+				<p>Don't have an account? Register <Link to="/register">here</Link></p>
 			</div>
 		</div>
 	)
