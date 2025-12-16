@@ -29,10 +29,10 @@ The project demonstrates how to integrate Appwrite with a modern React app using
 <img src="./screenshots/login.png" alt="Login Page" />
 
 ### Registration Page
-<img src="./screenshots/chatroom.png" alt="Chat Room" />
+<img src="./screenshots/register.png" alt="Register Page" />
 
 ### Chat Room
-<img src="./screenshots/register.png" alt="Register Page" />
+<img src="./screenshots/chatroom.png" alt="Chat Room" />
 
 
 ---
