@@ -5,6 +5,13 @@ The project demonstrates how to integrate Appwrite with a modern React app using
 
 ---
 
+## 🌐 Live Demo
+
+💬 **Try it here:**  
+👉 https://realtime-chat-with-react-appwrite.vercel.app/
+
+---
+
 ## ✨ Features
 
 - 🔐 **Authentication**
@@ -49,7 +56,8 @@ The project demonstrates how to integrate Appwrite with a modern React app using
 - **Tooling**
   - Vite
   - JavaScript (ES6+)
-
+- **Hosting**
+  - Vercel
 ---
 
 ## 🧠 Concepts Used
