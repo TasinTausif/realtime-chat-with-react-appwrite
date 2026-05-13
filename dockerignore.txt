@@ -1,0 +1,45 @@
+# Version Control
+.git
+.gitignore
+.gitattributes
+
+# Dependencies (rebuilt in container)
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build outputs
+dist
+build
+out
+
+# Development environment
+.env
+.env.local
+.env.*.local
+.vscode
+.idea
+.DS_Store
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.circleci
+Jenkinsfile
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Testing
+__tests__
+test
+*.spec.js
+*.test.js
+coverage
+
+# Documentation
+README.md
+LICENSE
+screenshots

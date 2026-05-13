@@ -1,0 +1,28 @@
+# Base Layer
+FROM node:22-alpine
+
+# Tells Docker that the container commands will be performed in the /app directory
+WORKDIR /app
+
+# Passing the env variables to the container
+ARG VITE_APPWRITE_ENDPOINT
+ARG VITE_APPWRITE_PROJECT_ID
+ARG VITE_APPWRITE_DATABASE
+ARG VITE_APPWRITE_COLLECTION
+
+ENV VITE_APPWRITE_ENDPOINT=$VITE_APPWRITE_ENDPOINT
+ENV VITE_APPWRITE_PROJECT_ID=$VITE_APPWRITE_PROJECT_ID
+ENV VITE_APPWRITE_DATABASE=$VITE_APPWRITE_DATABASE
+ENV VITE_APPWRITE_COLLECTION=$VITE_APPWRITE_COLLECTION
+
+# Copies the contents of the current directory (where the Dockerfile is located) to the working directory in the container (/app)
+COPY . .
+
+# Build Time command to install the dependencies into the image
+RUN npm install
+
+# Tells Docker that the container listens on port 5173 at runtime. This is the port that the application will run on inside the container.
+EXPOSE 5173
+
+# Run time command to start the application when the container is run
+CMD ["npm", "run", "dev", "--", "--host"]
